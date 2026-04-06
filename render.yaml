@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: spherical-chess
+    runtime: node
+    buildCommand: npm install --legacy-peer-deps && npm run build --workspace=shared && npm run build --workspace=server && npm run build --workspace=client
+    startCommand: node server/dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production

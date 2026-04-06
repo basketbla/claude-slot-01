@@ -4,10 +4,10 @@
 
 import {
   Piece, PieceType, Color, Position, Move, GameState, GameStatus,
-} from './types';
+} from './types.js';
 import {
   wrapFile, wrapPosition, getPiece, cloneGameState, posEqual, posToString,
-} from './board';
+} from './board.js';
 
 // ---- Directional helpers ----
 

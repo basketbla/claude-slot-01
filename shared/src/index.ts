@@ -1,3 +1,3 @@
-export * from './types';
-export * from './board';
-export * from './moves';
+export * from './types.js';
+export * from './board.js';
+export * from './moves.js';

@@ -43,7 +43,7 @@ export function useSocket(): UseSocketReturn {
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
 
   useEffect(() => {
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
+    const serverUrl = import.meta.env.VITE_SERVER_URL || window.location.origin;
     const socket: GameSocket = io(serverUrl);
     socketRef.current = socket;
 

@@ -19,7 +19,7 @@
 //   rank direction.
 // ============================================================
 
-import { Piece, PieceType, Color, Position, GameState, GameStatus } from './types';
+import { Piece, PieceType, Color, Position, GameState, GameStatus } from './types.js';
 
 export function createEmptyBoard(): (Piece | null)[][] {
   const board: (Piece | null)[][] = [];

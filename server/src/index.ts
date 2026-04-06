@@ -2,6 +2,8 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { GameManager } from './game/GameManager.js';
 import { Matchmaker } from './matchmaking/Matchmaker.js';
 import type {
@@ -11,11 +13,18 @@ import type {
   Position,
 } from 'spherical-chess-shared';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve client static files in production
+const clientDist = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientDist));
 
 const httpServer = createServer(app);
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
@@ -99,6 +108,11 @@ io.on('connection', (socket) => {
       gameManager.handleDisconnect(roomId, socket.id);
     }
   });
+});
+
+// SPA fallback — serve index.html for non-API routes
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(clientDist, 'index.html'));
 });
 
 httpServer.listen(PORT, () => {
