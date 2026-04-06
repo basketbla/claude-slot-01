@@ -136,6 +136,7 @@ function BoardSquare({
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const pointerDownPos = useRef<{ x: number; y: number } | null>(null);
 
   const geometry = useMemo(() => createSquareGeometry(file, rank), [file, rank]);
   const center = useMemo(() => boardToSphere(file, rank), [file, rank]);
@@ -158,9 +159,20 @@ function BoardSquare({
       <mesh
         ref={meshRef}
         geometry={geometry}
-        onClick={(e) => {
+        onPointerDown={(e) => {
           e.stopPropagation();
-          onClick();
+          pointerDownPos.current = { x: e.clientX, y: e.clientY };
+        }}
+        onPointerUp={(e) => {
+          e.stopPropagation();
+          if (pointerDownPos.current) {
+            const dx = e.clientX - pointerDownPos.current.x;
+            const dy = e.clientY - pointerDownPos.current.y;
+            if (dx * dx + dy * dy < 25) {
+              onClick();
+            }
+          }
+          pointerDownPos.current = null;
         }}
         onPointerOver={(e) => {
           e.stopPropagation();
