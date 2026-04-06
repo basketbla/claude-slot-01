@@ -1,0 +1,9 @@
+{
+  "name": "Spherical Chess",
+  "short_name": "SphereChess",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#e94560",
+  "description": "Play chess on a sphere! A variant where the board wraps around creating unique tactical possibilities."
+}
